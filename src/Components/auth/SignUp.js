@@ -1,0 +1,62 @@
+import React, { Component } from "react";
+import axios from "axios";
+
+class SignUp extends Component {
+  state = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  };
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  };
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(this.state);
+    const options = {
+      method: "POST",
+      url: "http://localhost:4000/api/user/register",
+      data: {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        password: this.state.password,
+      },
+    };
+    const res = await axios(options);
+    console.log(res);
+  };
+  render() {
+    return (
+      <div className="container">
+        <form className="white" onSubmit={this.handleSubmit}>
+          <h5 className="grey-text text-darken-3">Sign Up</h5>
+          <div className="input-field">
+            <label htmlFor="email">Email</label>
+            <input type="email" id="email" onChange={this.handleChange} />
+          </div>
+          <div className="input-field">
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" onChange={this.handleChange} />
+          </div>
+          <div className="input-field">
+            <label htmlFor="firstName">First Name</label>
+            <input type="text" id="firstName" onChange={this.handleChange} />
+          </div>
+          <div className="input-field">
+            <label htmlFor="lastName">Last Name</label>
+            <input type="text" id="lastName" onChange={this.handleChange} />
+          </div>
+          <div className="input-field">
+            <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+export default SignUp;
